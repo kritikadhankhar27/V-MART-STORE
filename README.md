@@ -33,5 +33,5 @@ A modern, showcase-ready **Database Management System (DBMS)** for managing a pi
 ### ✅ **1️⃣ Clone**
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/v_mart_inventory.git
+git clone https://github.com/kritikadhankhar27/v_mart_inventory.git
 cd v_mart_inventory
