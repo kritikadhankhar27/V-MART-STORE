@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Manage Suppliers - V Mart{% endblock %}
+
+{% block content %}
+<h2>Manage Suppliers</h2>
+
+<form method="POST" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <input name="name" placeholder="Supplier Name" class="form-control" required>
+  </div>
+  <div class="col-md-2">
+    <input name="contact" placeholder="Contact" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <input name="email" placeholder="Email" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <input name="address" placeholder="Address" class="form-control">
+  </div>
+  <div class="col-md-1">
+    <button type="submit" class="btn btn-success w-100">Add</button>
+  </div>
+</form>
+
+<table class="table table-hover">
+  <thead><tr><th>Name</th><th>Contact</th><th>Email</th><th>Address</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for s in suppliers %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{{ s.contact }}</td>
+      <td>{{ s.email }}</td>
+      <td>{{ s.address }}</td>
+      <td>
+        <a href="{{ url_for('delete_supplier', supplier_id=s.supplier_id) }}" class="btn btn-sm btn-danger"
+           onclick="return confirm('Delete this supplier?');">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
