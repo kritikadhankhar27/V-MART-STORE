@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Low Stock Report - V Mart{% endblock %}
+
+{% block content %}
+<h2>Low Stock Products</h2>
+
+<p>Below are items that have reached or fallen below their minimum stock level.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Category</th>
+      <th>Supplier</th>
+      <th>Stock</th>
+      <th>Min Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr class="table-danger">
+      <td>{{ p.name }}</td>
+      <td>{{ p.category_name }}</td>
+      <td>{{ p.supplier_name }}</td>
+      <td>{{ p.stock_quantity }}</td>
+      <td>{{ p.min_stock_level }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4 class="mt-5">Low Stock Chart</h4>
+<canvas id="stockChart" height="100"></canvas>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+fetch('{{ url_for("api_stock_levels") }}')
+  .then(r => r.json())
+  .then(data => {
+    const labels = data.map(d => d.category);
+    const lowStock = data.map(d => d.low_stock_products);
+    const total = data.map(d => d.total_products);
+
+    new Chart(document.getElementById('stockChart'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'Low Stock', data: lowStock, backgroundColor: 'red' },
+          { label: 'Total Products', data: total, backgroundColor: 'blue' }
+        ]
+      }
+    });
+  });
+</script>
+{% endblock %}
